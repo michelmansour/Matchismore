@@ -1,29 +1,143 @@
 //
 //  CardGameViewController.m
-//  Matchismore
+//  Matchismo
 //
-//  Created by Michel Mansour on 10/10/13.
+//  Created by Michel Mansour on 10/7/13.
 //  Copyright (c) 2013 Michel Mansour. All rights reserved.
 //
 
 #import "CardGameViewController.h"
+#import "CardMatchingGame.h"
+#import "PlayingCardDeck.h"
+#import "GameResult.h"
 
-@interface CardGameViewController ()
-
+@interface CardGameViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UITextView *descText;
+@property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic) GameResult *gameResult;
+@property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 @end
 
 @implementation CardGameViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+- (CardMatchingGame *)game {
+    if (!_game) {
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self deckStartSize] usingDeck:[self deckToPlayWith] withMatchSetSize:[self matchSetSizeToPlayWith] withFlipCost:1 withMatchBonus:4 withMismatchPenalty:2];
+    }
+    return _game;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (GameResult *)gameResult {
+    if (!_gameResult) {
+        _gameResult = [[GameResult alloc] initForGame:[self gameName]];
+    }
+    return _gameResult;
+}
+
+- (NSString *)gameName { return nil; } // abstract
+- (NSUInteger)deckStartSize { return 0; } // abstract
+- (Deck *)deckToPlayWith { return nil; } // abstract
+- (NSUInteger)matchSetSizeToPlayWith { return 0; } // abstract
+- (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate { /* abstract */ }
+
+- (void)decorateCardButton:(UIButton *)cardButton fromCard:(Card *)card {
+    [cardButton setTitle:card.contents forState:UIControlStateSelected];
+}
+
+- (NSAttributedString *)displayStringForCard:(Card *)card {
+    return [[NSAttributedString alloc] initWithString:card.contents];
+}
+
+- (NSAttributedString *)joinAttrStrings:(NSArray *)strs withString:(NSString *)delim {
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
+
+    NSAttributedString *delimiter = [[NSAttributedString alloc] initWithString:delim];
+    for (id item in strs) {
+        if ([item isKindOfClass:[NSAttributedString class]]) {
+            NSAttributedString *str = (NSAttributedString *)item;
+            if (result.length > 0) {
+                [result appendAttributedString:delimiter];
+            }
+            [result appendAttributedString:str];
+        }
+    }
+    
+    return result;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self deckStartSize];
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [self.cardCollectionView dequeueReusableCellWithReuseIdentifier:@"Card" forIndexPath:indexPath];
+    Card *card = [self.game cardAtIndex:indexPath.item];
+    [self updateCell:cell usingCard:card animate:NO];
+    return cell;
+}
+
+- (void)updateUI {
+    for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]) {
+        NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
+        Card *card = [self.game cardAtIndex:indexPath.item];
+        [self updateCell:cell usingCard:card animate:YES];
+    }
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    
+    // set the last flip description
+    NSMutableAttributedString *descStr = [[NSMutableAttributedString alloc] initWithString:@""];
+    if (self.game.lastFlipWasMatchCheck) {
+        NSMutableArray *cardContents = [[NSMutableArray alloc] init];
+        [cardContents addObject:[self displayStringForCard:self.game.lastFlipCard]];
+        for (id item in self.game.lastCardsChecked) {
+            if ([item isKindOfClass:[Card class]]) {
+                Card *matchCard = (Card *)item;
+                [cardContents addObject:[self displayStringForCard:matchCard]];
+            }
+        }
+        if (self.game.lastFlipWasMatch) {
+            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"Matched "]];
+            [descStr appendAttributedString:[self joinAttrStrings:cardContents withString:@"&"]];
+            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" for %d points", self.game.lastFlipScore]]];
+        } else {
+            [descStr appendAttributedString:[self joinAttrStrings:cardContents withString:@"&"]];
+            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" don't match! %d point penalty!", -1 * self.game.lastFlipScore]]];
+        }
+    } else if (self.game.lastFlipCard) {
+        if (self.game.lastFlipCard.isFaceUp) {
+            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"Flipped up "]];
+            [descStr appendAttributedString:[self displayStringForCard:self.game.lastFlipCard]];
+        } else {
+            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"Flipped down "]];
+            [descStr appendAttributedString:[self displayStringForCard:self.game.lastFlipCard]];
+        }
+    }
+    self.descText.attributedText = descStr;
+}
+
+- (IBAction)flipCard:(UITapGestureRecognizer *)gesture {
+    CGPoint tapLocation = [gesture locationInView:self.cardCollectionView];
+    NSIndexPath *indexPath = [self.cardCollectionView indexPathForItemAtPoint:tapLocation];
+    if (indexPath) {
+        [self.game flipCardAtIndex:indexPath.item];
+        [self updateUI];
+        self.gameResult.score = self.game.score;
+    }
+}
+
+- (void)setupGame { /* abstract */ }
+
+- (IBAction)dealNewGame {
+    self.game = nil;
+    self.gameResult = nil;
+    [self setupGame];
+    [self updateUI];
 }
 
 @end

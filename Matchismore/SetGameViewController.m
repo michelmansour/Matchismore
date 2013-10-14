@@ -96,10 +96,16 @@
         SetCardCollectionViewCell *sccvc = (SetCardCollectionViewCell *)cell;
         SetCard *setCard = (SetCard *)card;
         
-        sccvc.setCardView.number = setCard.number;
-        sccvc.setCardView.shape = setCard.shape;
-        sccvc.setCardView.color = setCard.color;
-        sccvc.setCardView.shading = setCard.shading;
+        if (setCard.isUnplayable) {
+            sccvc.setCardView.hidden = YES;
+        } else {
+            sccvc.setCardView.number = setCard.number;
+            sccvc.setCardView.shape = setCard.shape;
+            sccvc.setCardView.color = setCard.color;
+            sccvc.setCardView.shading = setCard.shading;
+            sccvc.setCardView.selected = setCard.faceUp;
+            sccvc.setCardView.hidden = NO;
+        }
     }
 }
 

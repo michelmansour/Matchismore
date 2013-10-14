@@ -151,7 +151,11 @@
     UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                                            cornerRadius:12.0];
     [roundedRect addClip];
-    [[UIColor whiteColor] setFill];
+    if (self.selected) {
+        [[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0] setFill];
+    } else {
+        [[UIColor whiteColor] setFill];
+    }
     UIRectFill(self.bounds);
     
     [[UIColor colorWithWhite:0.8 alpha:1.0] setStroke];

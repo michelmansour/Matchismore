@@ -76,6 +76,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="06F-SM-KIy" id="SVQ-5v-n1W"/>
                                     <outlet property="delegate" destination="06F-SM-KIy" id="kMs-Lt-AOD"/>
+                                    <outletCollection property="gestureRecognizers" destination="Ry4-VR-CdY" appends="YES" id="aBl-DN-q40"/>
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MRp-Uy-lVu">
@@ -125,6 +126,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s0f-Ah-55E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Ry4-VR-CdY">
+                    <connections>
+                        <action selector="flipCard:" destination="06F-SM-KIy" id="kBp-mv-y8B"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="631" y="160"/>
         </scene>
@@ -346,6 +352,7 @@
         <class className="CardGameViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
             <relationships>
+                <relationship kind="action" name="flipCard:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="cardCollectionView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="descText" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>

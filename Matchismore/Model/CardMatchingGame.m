@@ -33,6 +33,7 @@
     self = [super init];
     
     if (self) {
+        NSLog(@"Creating game with %d cards", cardCount);
         for (int i = 0; i < cardCount; i++) {
             Card *card = [deck drawRandomCard];
             if (!card) {
@@ -48,6 +49,10 @@
     }
     
     return self;
+}
+
+- (NSUInteger)numberOfCardsInPlay {
+    return [self.cards count];
 }
 
 - (Card *)cardAtIndex:(NSUInteger)index {
@@ -93,6 +98,11 @@
         self.lastFlipCard = card;
         card.faceUp = !card.isFaceUp;
     }
+}
+
+- (void)removeCardAtIndex:(NSUInteger)index {
+    NSLog(@"Removing card at index %d", index);
+    [self.cards removeObjectAtIndex:index];
 }
 
 @end

@@ -21,6 +21,7 @@
 - (id)initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck withMatchSetSize:(NSUInteger)matchSize withFlipCost:(NSUInteger)flipCost withMatchBonus:(NSUInteger)matchBonus withMismatchPenalty:(NSUInteger)mismatchPenalty;
 - (void)flipCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
-
+- (void)removeCardAtIndex:(NSUInteger)index;
+- (NSUInteger)numberOfCardsInPlay;
 
 @end

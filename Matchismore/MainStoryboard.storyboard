@@ -91,6 +91,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="threeMoreCards:" destination="06F-SM-KIy" eventType="touchUpInside" id="vgv-Ac-iHY"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="cOq-9Z-R89">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -104,18 +107,18 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="MRp-Uy-lVu" firstAttribute="leading" secondItem="cOq-9Z-R89" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="3TW-D4-N9U"/>
+                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="bottom" secondItem="cOq-9Z-R89" secondAttribute="bottom" type="default" id="4x6-Jd-6Iv"/>
+                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="59u-fA-km0"/>
                             <constraint firstAttribute="trailing" secondItem="Ucc-Un-k8u" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Hdx-PN-63F"/>
                             <constraint firstItem="rE1-0d-l7m" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="NOD-0T-aYp"/>
-                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="bottom" secondItem="Ucc-Un-k8u" secondAttribute="bottom" type="default" id="Sru-Oo-pzi"/>
                             <constraint firstItem="z5H-tf-WaK" firstAttribute="trailing" secondItem="usL-q4-HdC" secondAttribute="trailing" type="default" id="V1H-6s-uPl"/>
+                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="bottom" secondItem="Ucc-Un-k8u" secondAttribute="bottom" type="default" id="XEO-GI-axZ"/>
                             <constraint firstItem="z5H-tf-WaK" firstAttribute="top" secondItem="usL-q4-HdC" secondAttribute="top" type="default" id="Xfd-7f-Rgb"/>
                             <constraint firstItem="cOq-9Z-R89" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="aZG-Ek-uqF"/>
                             <constraint firstItem="rE1-0d-l7m" firstAttribute="leading" secondItem="MRp-Uy-lVu" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="etM-Dn-oVZ"/>
-                            <constraint firstItem="cOq-9Z-R89" firstAttribute="bottom" secondItem="MRp-Uy-lVu" secondAttribute="bottom" type="default" id="oZq-Yx-fQ0"/>
                             <constraint firstItem="Ucc-Un-k8u" firstAttribute="top" secondItem="rE1-0d-l7m" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="pHs-MZ-iMf"/>
                             <constraint firstItem="z5H-tf-WaK" firstAttribute="leading" secondItem="usL-q4-HdC" secondAttribute="leading" type="default" id="q80-Zx-XNc"/>
                             <constraint firstItem="cOq-9Z-R89" firstAttribute="leading" secondItem="usL-q4-HdC" secondAttribute="leading" type="default" id="wHz-vU-4MT"/>
-                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="xlK-2m-rFY"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set" image="SetTabIcon.png" id="WHB-G5-rRt"/>
@@ -390,6 +393,9 @@
         </class>
         <class className="SetGameViewController" superclassName="CardGameViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SetGameViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="threeMoreCards:" candidateClass="UIButton"/>
+            </relationships>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>

@@ -136,6 +136,26 @@
     }
 }
 
+- (void)requestMoreCards:(NSUInteger)count {
+    NSUInteger curNumCards = [self.game numberOfCardsInPlay];
+    NSArray *cards = [self.game moreCards:count];
+    if ([cards count] > 0) {
+        NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+        for (int i = 0; i < [cards count]; i++) {
+            [indexPaths addObject:[NSIndexPath indexPathForItem:curNumCards + i inSection:0]];
+        }
+        [self.cardCollectionView insertItemsAtIndexPaths:indexPaths];
+        [self.cardCollectionView scrollToItemAtIndexPath:[indexPaths lastObject] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more cards"
+                                                        message:@"There are no more cards in the deck"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 - (void)setupGame { /* abstract */ }
 
 - (IBAction)dealNewGame {

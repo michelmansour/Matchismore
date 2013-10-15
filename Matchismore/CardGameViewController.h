@@ -19,5 +19,6 @@
 - (Deck *)deckToPlayWith; // abstract
 - (NSUInteger)matchSetSizeToPlayWith; // abstract
 - (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate; // abstract
+- (void)requestMoreCards:(NSUInteger)count;
 
 @end

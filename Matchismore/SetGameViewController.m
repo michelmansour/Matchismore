@@ -16,6 +16,7 @@
 @end
 
 #define NUM_CARDS_IN_PLAY 12
+#define SET_MORE_CARDS 3
 
 @implementation SetGameViewController
 
@@ -85,6 +86,10 @@
         sccvc.setCardView.shading = setCard.shading;
         sccvc.setCardView.selected = setCard.faceUp;
     }
+}
+
+- (IBAction)threeMoreCards:(UIButton *)sender {
+    [self requestMoreCards:SET_MORE_CARDS];
 }
 
 @end

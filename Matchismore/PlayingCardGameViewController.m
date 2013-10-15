@@ -46,16 +46,6 @@
     return [[NSAttributedString alloc] initWithString:card.contents];
 }
 
-- (void)decorateCardButton:(UIButton *)cardButton fromCard:(Card *)card {
-    if ([card isMemberOfClass:[PlayingCard class]]) {
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-        cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
-    }
-}
-
 - (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate {
     if ([cell isKindOfClass:[PlayingCardCollectionViewCell class]] &&
         [card isKindOfClass:[PlayingCard class]]) {

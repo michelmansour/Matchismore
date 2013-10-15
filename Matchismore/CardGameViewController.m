@@ -41,10 +41,6 @@
 - (NSUInteger)matchSetSizeToPlayWith { return 0; } // abstract
 - (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate { /* abstract */ }
 
-- (void)decorateCardButton:(UIButton *)cardButton fromCard:(Card *)card {
-    [cardButton setTitle:card.contents forState:UIControlStateSelected];
-}
-
 - (NSAttributedString *)displayStringForCard:(Card *)card {
     return [[NSAttributedString alloc] initWithString:card.contents];
 }
@@ -71,7 +67,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self deckStartSize];
+    return [self.game numberOfCardsInPlay];
 }
 
 
@@ -81,6 +77,8 @@
     [self updateCell:cell usingCard:card animate:NO];
     return cell;
 }
+
+
 
 - (void)updateUI {
     for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]) {
@@ -126,6 +124,13 @@
     NSIndexPath *indexPath = [self.cardCollectionView indexPathForItemAtPoint:tapLocation];
     if (indexPath) {
         [self.game flipCardAtIndex:indexPath.item];
+        for (int i = [self.game numberOfCardsInPlay] - 1; i >= 0; i--) {
+            Card *card = [self.game cardAtIndex:i];
+            if ([card isUnplayable]) {
+                [self.game removeCardAtIndex:i];
+                [self.cardCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+            }
+        }
         [self updateUI];
         self.gameResult.score = self.game.score;
     }
@@ -136,6 +141,7 @@
 - (IBAction)dealNewGame {
     self.game = nil;
     self.gameResult = nil;
+    [self.cardCollectionView reloadData];
     [self setupGame];
     [self updateUI];
 }

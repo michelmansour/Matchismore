@@ -14,7 +14,6 @@
 
 - (NSString *)gameName; // abstract
 - (NSAttributedString *)displayStringForCard:(Card *)card; // abstract
-- (void)decorateCardButton:(UIButton *)cardButton fromCard:(Card *)card; // abstract
 - (NSUInteger)deckStartSize; // abstract
 - (void)setupGame;
 - (Deck *)deckToPlayWith; // abstract

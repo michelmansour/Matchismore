@@ -73,39 +73,17 @@
     return nil;
 }
 
-- (void)decorateCardButton:(UIButton *)cardButton fromCard:(Card *)card {
-    if ([card isMemberOfClass:[SetCard class]]) {
-        [cardButton setAttributedTitle:[[self displayStringForCard:card] copy] forState:UIControlStateNormal];
-        cardButton.selected = card.isFaceUp;
-        if (card.isFaceUp) {
-            [cardButton setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0]];
-        } else {
-            [cardButton setBackgroundColor:[UIColor whiteColor]];
-        }
-        cardButton.enabled = !card.isUnplayable;
-        if (card.isUnplayable) {
-            [cardButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@""] forState:UIControlStateNormal];
-            [cardButton setBackgroundColor:[UIColor whiteColor]];
-        }
-    }
-}
-
 - (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate {
     if ([cell isKindOfClass:[SetCardCollectionViewCell class]] &&
         [card isKindOfClass:[SetCard class]]) {
         SetCardCollectionViewCell *sccvc = (SetCardCollectionViewCell *)cell;
         SetCard *setCard = (SetCard *)card;
         
-        if (setCard.isUnplayable) {
-            sccvc.setCardView.hidden = YES;
-        } else {
-            sccvc.setCardView.number = setCard.number;
-            sccvc.setCardView.shape = setCard.shape;
-            sccvc.setCardView.color = setCard.color;
-            sccvc.setCardView.shading = setCard.shading;
-            sccvc.setCardView.selected = setCard.faceUp;
-            sccvc.setCardView.hidden = NO;
-        }
+        sccvc.setCardView.number = setCard.number;
+        sccvc.setCardView.shape = setCard.shape;
+        sccvc.setCardView.color = setCard.color;
+        sccvc.setCardView.shading = setCard.shading;
+        sccvc.setCardView.selected = setCard.faceUp;
     }
 }
 

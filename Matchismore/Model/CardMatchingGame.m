@@ -101,7 +101,6 @@
 }
 
 - (void)removeCardAtIndex:(NSUInteger)index {
-    NSLog(@"Removing card at index %d", index);
     [self.cards removeObjectAtIndex:index];
 }
 

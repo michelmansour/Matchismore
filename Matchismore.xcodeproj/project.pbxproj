@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D01603CC180C1B02003FB571 /* CardDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0160382180C1B02003FB571 /* CardDisplayViewController.m */; };
 		D01603CE180C1B02003FB571 /* CardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0160386180C1B02003FB571 /* CardGameViewController.m */; };
 		D01603D3180C1B02003FB571 /* J♠.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D016038D180C1B02003FB571 /* J♠.jpg */; };
 		D01603D4180C1B02003FB571 /* J♠@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D016038E180C1B02003FB571 /* J♠@2x.jpg */; };
@@ -65,8 +64,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D0160381180C1B02003FB571 /* CardDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardDisplayViewController.h; sourceTree = "<group>"; };
-		D0160382180C1B02003FB571 /* CardDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardDisplayViewController.m; sourceTree = "<group>"; };
 		D0160385180C1B02003FB571 /* CardGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardGameViewController.h; sourceTree = "<group>"; };
 		D0160386180C1B02003FB571 /* CardGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardGameViewController.m; sourceTree = "<group>"; };
 		D016038D180C1B02003FB571 /* J♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♠.jpg"; sourceTree = "<group>"; };
@@ -242,8 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				D01603AC180C1B02003FB571 /* Model */,
-				D0160381180C1B02003FB571 /* CardDisplayViewController.h */,
-				D0160382180C1B02003FB571 /* CardDisplayViewController.m */,
 				D0160385180C1B02003FB571 /* CardGameViewController.h */,
 				D0160386180C1B02003FB571 /* CardGameViewController.m */,
 				D01603A5180C1B02003FB571 /* GameResultViewController.h */,
@@ -385,7 +380,6 @@
 				D0FACE0418076A3A00B09289 /* main.m in Sources */,
 				D0FACE0818076A3A00B09289 /* CardGameAppDelegate.m in Sources */,
 				D0FACE8618077C0100B09289 /* PlayingCardCollectionViewCell.m in Sources */,
-				D01603CC180C1B02003FB571 /* CardDisplayViewController.m in Sources */,
 				D01603CE180C1B02003FB571 /* CardGameViewController.m in Sources */,
 				D01603EB180C1B02003FB571 /* GameResultViewController.m in Sources */,
 				D01603F0180C1B02003FB571 /* Card.m in Sources */,

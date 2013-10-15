@@ -33,7 +33,6 @@
     self = [super init];
     
     if (self) {
-        NSLog(@"Creating game with %d cards", cardCount);
         for (int i = 0; i < cardCount; i++) {
             Card *card = [deck drawRandomCard];
             if (!card) {

@@ -23,5 +23,6 @@
 - (Card *)cardAtIndex:(NSUInteger)index;
 - (void)removeCardAtIndex:(NSUInteger)index;
 - (NSUInteger)numberOfCardsInPlay;
+- (NSArray *)moreCards:(NSUInteger)count;
 
 @end

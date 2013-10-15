@@ -10,6 +10,7 @@
 
 @interface CardMatchingGame ()
 @property (nonatomic, readwrite) int score;
+@property (strong, nonatomic) Deck *deck;
 @property (strong, nonatomic) NSMutableArray *cards;
 @property (nonatomic) NSUInteger matchSize;
 @property (nonatomic) NSUInteger flipCost;
@@ -41,6 +42,7 @@
                 self.cards[i] = card;
             }
         }
+        self.deck = deck;
         self.matchSize = matchSize;
         self.flipCost = flipCost;
         self.matchBonus = matchBonus;
@@ -56,6 +58,20 @@
 
 - (Card *)cardAtIndex:(NSUInteger)index {
     return (index < [self.cards count]) ? self.cards[index] : nil;
+}
+
+- (NSArray *)moreCards:(NSUInteger)count {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    for (int i = 0; i < count; i++) {
+        Card *card = [self.deck drawRandomCard];
+        if (card) {
+            [result addObject:card];
+        } else {
+            break;
+        }
+    }
+    [self.cards addObjectsFromArray:result];
+    return result;
 }
 
 - (void)flipCardAtIndex:(NSUInteger)index {

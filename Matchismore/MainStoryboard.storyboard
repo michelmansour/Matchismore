@@ -95,36 +95,32 @@
                                     <action selector="threeMoreCards:" destination="06F-SM-KIy" eventType="touchUpInside" id="vgv-Ac-iHY"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="cOq-9Z-R89">
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="138" id="z2t-Yq-bLZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heP-Jd-826">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="leading" secondItem="cOq-9Z-R89" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="3TW-D4-N9U"/>
-                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="bottom" secondItem="cOq-9Z-R89" secondAttribute="bottom" type="default" id="4x6-Jd-6Iv"/>
                             <constraint firstItem="MRp-Uy-lVu" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="59u-fA-km0"/>
+                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="leading" secondItem="usL-q4-HdC" secondAttribute="leading" constant="146" id="Dhu-8Z-Bnp"/>
+                            <constraint firstItem="heP-Jd-826" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="ENe-j4-7mY"/>
                             <constraint firstAttribute="trailing" secondItem="Ucc-Un-k8u" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Hdx-PN-63F"/>
+                            <constraint firstItem="heP-Jd-826" firstAttribute="leading" secondItem="usL-q4-HdC" secondAttribute="leading" constant="6" id="MAC-Ie-fSa"/>
                             <constraint firstItem="rE1-0d-l7m" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="NOD-0T-aYp"/>
                             <constraint firstItem="z5H-tf-WaK" firstAttribute="trailing" secondItem="usL-q4-HdC" secondAttribute="trailing" type="default" id="V1H-6s-uPl"/>
                             <constraint firstItem="MRp-Uy-lVu" firstAttribute="bottom" secondItem="Ucc-Un-k8u" secondAttribute="bottom" type="default" id="XEO-GI-axZ"/>
                             <constraint firstItem="z5H-tf-WaK" firstAttribute="top" secondItem="usL-q4-HdC" secondAttribute="top" type="default" id="Xfd-7f-Rgb"/>
-                            <constraint firstItem="cOq-9Z-R89" firstAttribute="top" secondItem="z5H-tf-WaK" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="aZG-Ek-uqF"/>
+                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="leading" secondItem="heP-Jd-826" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="cYe-G6-ucD"/>
                             <constraint firstItem="rE1-0d-l7m" firstAttribute="leading" secondItem="MRp-Uy-lVu" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="etM-Dn-oVZ"/>
+                            <constraint firstItem="MRp-Uy-lVu" firstAttribute="bottom" secondItem="heP-Jd-826" secondAttribute="bottom" type="default" id="g88-1r-pgF"/>
                             <constraint firstItem="Ucc-Un-k8u" firstAttribute="top" secondItem="rE1-0d-l7m" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="pHs-MZ-iMf"/>
                             <constraint firstItem="z5H-tf-WaK" firstAttribute="leading" secondItem="usL-q4-HdC" secondAttribute="leading" type="default" id="q80-Zx-XNc"/>
-                            <constraint firstItem="cOq-9Z-R89" firstAttribute="leading" secondItem="usL-q4-HdC" secondAttribute="leading" type="default" id="wHz-vU-4MT"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set" image="SetTabIcon.png" id="WHB-G5-rRt"/>
                     <connections>
                         <outlet property="cardCollectionView" destination="z5H-tf-WaK" id="EKI-1s-iCL"/>
-                        <outlet property="descText" destination="cOq-9Z-R89" id="Z1s-nH-aX5"/>
+                        <outlet property="descriptionView" destination="heP-Jd-826" id="zGK-UL-xzh"/>
                         <outlet property="scoreLabel" destination="Ucc-Un-k8u" id="SCg-9S-I0P"/>
                     </connections>
                 </viewController>
@@ -355,9 +351,7 @@
         <class className="CardGameViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
             <relationships>
-                <relationship kind="action" name="flipCard:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="cardCollectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="descText" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -378,6 +372,9 @@
         </class>
         <class className="PlayingCardGameViewController" superclassName="CardGameViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardGameViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="descText" candidateClass="UITextView"/>
+            </relationships>
         </class>
         <class className="PlayingCardView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardView.h"/>
@@ -394,7 +391,7 @@
         <class className="SetGameViewController" superclassName="CardGameViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SetGameViewController.h"/>
             <relationships>
-                <relationship kind="action" name="threeMoreCards:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="descriptionView" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">

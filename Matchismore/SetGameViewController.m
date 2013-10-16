@@ -12,7 +12,7 @@
 #import "SetCardCollectionViewCell.h"
 
 @interface SetGameViewController ()
-
+@property (weak, nonatomic) IBOutlet UIView *descriptionView;
 @end
 
 #define NUM_CARDS_IN_PLAY 12
@@ -28,6 +28,10 @@
     // nothing yet...
 }
 
+- (BOOL)removeUnplayableCards {
+    return YES;
+}
+
 - (NSUInteger)deckStartSize {
     return NUM_CARDS_IN_PLAY;
 }
@@ -36,8 +40,12 @@
     return [[SetCardDeck alloc] init];
 }
 
-- (NSUInteger)matchSetSizeToPlayWith {
+- (NSUInteger)matchSetSize {
     return 3;
+}
+
+- (NSUInteger)flipCost {
+    return 0;
 }
 
 + (UIColor *)colorForString:(NSString *)colorStr withAlpha:(CGFloat)alpha {
@@ -85,6 +93,27 @@
         sccvc.setCardView.color = setCard.color;
         sccvc.setCardView.shading = setCard.shading;
         sccvc.setCardView.selected = setCard.faceUp;
+        sccvc.setCardView.drawBorder = YES;
+    }
+}
+
+- (void)updateUI {
+    [super updateUI];
+    
+    if (self.game.lastFlipWasMatchCheck) {
+        
+    } else if (self.game.lastFlipCard) {
+        if ([self.game.lastFlipCard isKindOfClass:[SetCard class]]) {
+            SetCard *card = (SetCard *)self.game.lastFlipCard;
+            SetCardView *cardView = [[SetCardView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.bounds.size.width / 2, self.descriptionView.bounds.size.height / 2)];
+            cardView.number = card.number;
+            cardView.shape = card.shape;
+            cardView.color = card.color;
+            cardView.shading = card.shading;
+            cardView.selected = NO;
+            cardView.drawBorder = NO;
+            [self.descriptionView addSubview:cardView];
+        }
     }
 }
 

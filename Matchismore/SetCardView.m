@@ -51,11 +51,11 @@
 }
 
 - (CGFloat)shapeWidth {
-    return [self width] * 0.25;
+    return [self width] * 0.2;
 }
 
 - (CGFloat)shapeHeight {
-    return [self height] * 0.75;
+    return [self height] * 0.65;
 }
 
 - (void)drawDiamond:(UIBezierPath *)diamond centeredAt:(CGFloat)widthFactor {
@@ -67,20 +67,27 @@
 }
 
 - (void)drawOval:(UIBezierPath *)oval centeredAt:(CGFloat)widthFactor {
-    [oval moveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height * 0.7)];
-    [oval addLineToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height * 0.3)];
-    [oval addArcWithCenter:CGPointMake(self.width * widthFactor, self.height * 0.3) radius:self.shapeWidth / 2.0 startAngle:M_PI endAngle:0 clockwise:YES];
-    [oval addLineToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height * 0.3)];
-    [oval addLineToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height * 0.7)];
-    [oval addArcWithCenter:CGPointMake(self.width * widthFactor, self.height * 0.7) radius:self.shapeWidth / 2.0 startAngle:0 endAngle:M_PI clockwise:YES];
+    CGFloat arcRadius = self.shapeWidth / 2.0;
+    CGFloat verticalOffset = (self.height - self.shapeHeight) / 2.0 - arcRadius;
+    [oval moveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.shapeHeight + verticalOffset)];
+    [oval addLineToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height - self.shapeHeight - verticalOffset)];
+    [oval addArcWithCenter:CGPointMake(self.width * widthFactor, self.height - self.shapeHeight - verticalOffset) radius:arcRadius startAngle:M_PI endAngle:0 clockwise:YES];
+    [oval addLineToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height - self.shapeHeight - verticalOffset)];
+    [oval addLineToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.shapeHeight + verticalOffset)];
+    [oval addArcWithCenter:CGPointMake(self.width * widthFactor, self.shapeHeight + verticalOffset) radius:arcRadius startAngle:0 endAngle:M_PI clockwise:YES];
     [oval closePath];
 }
 
 - (void)drawSquiggle:(UIBezierPath *)squiggle centeredAt:(CGFloat)widthFactor {
     [squiggle moveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height / 2.0 - self.shapeHeight / 2.0)];
-    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height / 2.0 + self.shapeHeight / 2.0) controlPoint1:CGPointMake(self.width * widthFactor, self.height / 2.0) controlPoint2:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height / 2.0)];
-//    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height / 2.0 - self.shapeWidth / 2.0) controlPoint1:CGPointMake(self.width * widthFactor - self.width / 2.0, self.height / 2.0) controlPoint2:CGPointMake(self.width * widthFactor, self.height / 2.0)];
-//    [squiggle closePath];
+    [squiggle addQuadCurveToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 - 5, self.height / 2.0 + self.shapeHeight / 2.0 - 15) controlPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 + 10, self.height / 2.0 - self.shapeHeight / 2.0)];
+    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height / 2.0 + self.shapeHeight / 2.0) controlPoint1:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 + 15, self.height / 2.0 + self.shapeHeight / 2.0 - 5) controlPoint2:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 + 10, self.height / 2.0 + self.shapeHeight / 2.0 - 5)];
+    [squiggle addQuadCurveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 + 5, self.height / 2.0 - self.shapeHeight / 2.0 + 15) controlPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 - 10, self.height / 2.0 + self.shapeHeight / 2.0)];
+    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height / 2.0 - self.shapeHeight / 2.0) controlPoint1:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 - 15, self.height / 2.0 - self.shapeHeight / 2.0 + 5) controlPoint2:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 - 10, self.height / 2.0 - self.shapeHeight / 2.0 + 5)];
+//    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height / 2.0 + self.shapeHeight / 2.0) controlPoint1:CGPointMake(self.width * widthFactor + 50, self.height / 2.0) controlPoint2:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 - 30, self.height / 2.0)];
+//    [squiggle addLineToPoint:CGPointMake(self.width * widthFactor, self.height / 2.0 + self.shapeHeight / 2.0)];
+//    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height / 2.0 - self.shapeWidth / 2.0) controlPoint1:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 - 30, self.height / 2.0) controlPoint2:CGPointMake(self.width * widthFactor + 30, self.height / 2.0)];
+    [squiggle closePath];
 }
 
 - (void)drawShape:(UIBezierPath *)path centeredAt:(CGFloat)widthFactor {
@@ -111,12 +118,12 @@
     if (self.number == 1 || self.number == 3) {
         [self drawShape:path centeredAt:0.5];
         if (self.number == 3) {
-            [self drawShape:path centeredAt:0.2];
-            [self drawShape:path centeredAt:0.8];
+            [self drawShape:path centeredAt:0.25];
+            [self drawShape:path centeredAt:0.75];
         }
     } else if (self.number == 2) {
-        [self drawShape:path centeredAt:0.35];
-        [self drawShape:path centeredAt:0.65];
+        [self drawShape:path centeredAt:0.375];
+        [self drawShape:path centeredAt:0.625];
     }
     
     UIColor *color = [self colorAsColor];

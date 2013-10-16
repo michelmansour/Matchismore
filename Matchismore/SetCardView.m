@@ -148,18 +148,25 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+    if (self.drawBorder) {
+        UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                                            cornerRadius:12.0];
-    [roundedRect addClip];
-    if (self.selected) {
-        [[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0] setFill];
+        [roundedRect addClip];
+        if (self.selected) {
+            [[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0] setFill];
+        } else {
+            [[UIColor whiteColor] setFill];
+        }
+        UIRectFill(self.bounds);
+
+        [[UIColor colorWithWhite:0.8 alpha:1.0] setStroke];
+        [roundedRect stroke];
     } else {
+        UIBezierPath *rect = [UIBezierPath bezierPathWithRect:self.bounds];
+        [rect addClip];
         [[UIColor whiteColor] setFill];
+        UIRectFill(self.bounds);
     }
-    UIRectFill(self.bounds);
-    
-    [[UIColor colorWithWhite:0.8 alpha:1.0] setStroke];
-    [roundedRect stroke];
     
     [self drawShapes];
 }

@@ -13,8 +13,7 @@
 
 @interface CardGameViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UITextView *descText;
-@property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic, readwrite) CardMatchingGame *game;
 @property (strong, nonatomic) GameResult *gameResult;
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 @end
@@ -23,7 +22,7 @@
 
 - (CardMatchingGame *)game {
     if (!_game) {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self deckStartSize] usingDeck:[self deckToPlayWith] withMatchSetSize:[self matchSetSizeToPlayWith] withFlipCost:1 withMatchBonus:4 withMismatchPenalty:2];
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self deckStartSize] usingDeck:[self deckToPlayWith] withMatchSetSize:self.matchSetSize withFlipCost:self.flipCost withMatchBonus:4 withMismatchPenalty:2];
     }
     return _game;
 }
@@ -45,22 +44,6 @@
     return [[NSAttributedString alloc] initWithString:card.contents];
 }
 
-- (NSAttributedString *)joinAttrStrings:(NSArray *)strs withString:(NSString *)delim {
-    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
-
-    NSAttributedString *delimiter = [[NSAttributedString alloc] initWithString:delim];
-    for (id item in strs) {
-        if ([item isKindOfClass:[NSAttributedString class]]) {
-            NSAttributedString *str = (NSAttributedString *)item;
-            if (result.length > 0) {
-                [result appendAttributedString:delimiter];
-            }
-            [result appendAttributedString:str];
-        }
-    }
-    
-    return result;
-}
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -78,8 +61,6 @@
     return cell;
 }
 
-
-
 - (void)updateUI {
     for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]) {
         NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
@@ -87,36 +68,6 @@
         [self updateCell:cell usingCard:card animate:YES];
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    
-    // set the last flip description
-    NSMutableAttributedString *descStr = [[NSMutableAttributedString alloc] initWithString:@""];
-    if (self.game.lastFlipWasMatchCheck) {
-        NSMutableArray *cardContents = [[NSMutableArray alloc] init];
-        [cardContents addObject:[self displayStringForCard:self.game.lastFlipCard]];
-        for (id item in self.game.lastCardsChecked) {
-            if ([item isKindOfClass:[Card class]]) {
-                Card *matchCard = (Card *)item;
-                [cardContents addObject:[self displayStringForCard:matchCard]];
-            }
-        }
-        if (self.game.lastFlipWasMatch) {
-            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"Matched "]];
-            [descStr appendAttributedString:[self joinAttrStrings:cardContents withString:@"&"]];
-            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" for %d points", self.game.lastFlipScore]]];
-        } else {
-            [descStr appendAttributedString:[self joinAttrStrings:cardContents withString:@"&"]];
-            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" don't match! %d point penalty!", -1 * self.game.lastFlipScore]]];
-        }
-    } else if (self.game.lastFlipCard) {
-        if (self.game.lastFlipCard.isFaceUp) {
-            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"Flipped up "]];
-            [descStr appendAttributedString:[self displayStringForCard:self.game.lastFlipCard]];
-        } else {
-            [descStr appendAttributedString:[[NSAttributedString alloc] initWithString:@"Flipped down "]];
-            [descStr appendAttributedString:[self displayStringForCard:self.game.lastFlipCard]];
-        }
-    }
-    self.descText.attributedText = descStr;
 }
 
 - (IBAction)flipCard:(UITapGestureRecognizer *)gesture {
@@ -124,11 +75,13 @@
     NSIndexPath *indexPath = [self.cardCollectionView indexPathForItemAtPoint:tapLocation];
     if (indexPath) {
         [self.game flipCardAtIndex:indexPath.item];
-        for (int i = [self.game numberOfCardsInPlay] - 1; i >= 0; i--) {
-            Card *card = [self.game cardAtIndex:i];
-            if ([card isUnplayable]) {
-                [self.game removeCardAtIndex:i];
-                [self.cardCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+        if (self.removeUnplayableCards) {
+            for (int i = [self.game numberOfCardsInPlay] - 1; i >= 0; i--) {
+                Card *card = [self.game cardAtIndex:i];
+                if ([card isUnplayable]) {
+                    [self.game removeCardAtIndex:i];
+                    [self.cardCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+                }
             }
         }
         [self updateUI];

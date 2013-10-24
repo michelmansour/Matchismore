@@ -16,6 +16,7 @@
 @property (nonatomic) NSUInteger flipCost;
 @property (nonatomic) NSUInteger matchBonus;
 @property (nonatomic) NSUInteger mismatchPenalty;
+@property (nonatomic) BOOL flipDownOnMismatch;
 @property (strong, nonatomic, readwrite) Card *lastFlipCard;
 @property (strong, nonatomic, readwrite) NSMutableArray *lastCardsChecked;
 @property (nonatomic, readwrite) BOOL lastFlipWasMatchCheck;
@@ -30,7 +31,7 @@
     return _cards;
 }
 
-- (id)initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck withMatchSetSize:(NSUInteger)matchSize withFlipCost:(NSUInteger)flipCost withMatchBonus:(NSUInteger)matchBonus withMismatchPenalty:(NSUInteger)mismatchPenalty{
+- (id)initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck withMatchSetSize:(NSUInteger)matchSize withFlipCost:(NSUInteger)flipCost withMatchBonus:(NSUInteger)matchBonus withMismatchPenalty:(NSUInteger)mismatchPenalty flipDownOnMismatch:(BOOL)flipDownOnMismatch {
     self = [super init];
     
     if (self) {
@@ -47,6 +48,7 @@
         self.flipCost = flipCost;
         self.matchBonus = matchBonus;
         self.mismatchPenalty = mismatchPenalty;
+        self.flipDownOnMismatch = flipDownOnMismatch;
     }
     
     return self;
@@ -111,7 +113,11 @@
             self.score += self.lastFlipScore - self.flipCost;
         }
         self.lastFlipCard = card;
-        card.faceUp = !card.isFaceUp;
+        if (self.flipDownOnMismatch && self.lastFlipWasMatchCheck && !self.lastFlipWasMatch) {
+            card.faceUp = NO;
+        } else {
+            card.faceUp = !card.isFaceUp;
+        }
     }
 }
 

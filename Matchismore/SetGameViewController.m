@@ -13,6 +13,10 @@
 
 @interface SetGameViewController ()
 @property (weak, nonatomic) IBOutlet UIView *descriptionView;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIView *cardView1;
+@property (weak, nonatomic) IBOutlet UIView *cardView2;
+@property (weak, nonatomic) IBOutlet UIView *cardView3;
 @end
 
 #define NUM_CARDS_IN_PLAY 12
@@ -46,6 +50,10 @@
 
 - (NSUInteger)flipCost {
     return 0;
+}
+
+- (BOOL)flipDownOnMismatch {
+    return YES;
 }
 
 + (UIColor *)colorForString:(NSString *)colorStr withAlpha:(CGFloat)alpha {
@@ -93,26 +101,73 @@
         sccvc.setCardView.color = setCard.color;
         sccvc.setCardView.shading = setCard.shading;
         sccvc.setCardView.selected = setCard.faceUp;
-        sccvc.setCardView.drawBorder = YES;
     }
+}
+
+- (void)miniView:(SetCardView *)cardView fromCard:(SetCard *)card inSuperview:(UIView *)nextCardView {
+    cardView.number = card.number;
+    cardView.shape = card.shape;
+    cardView.color = card.color;
+    cardView.shading = card.shading;
+    cardView.selected = NO;
+
+    [cardView setBackgroundColor:[UIColor clearColor]];
+    cardView.center = CGPointMake(nextCardView.bounds.size.width / 2, nextCardView.bounds.size.height / 2);
+    CGAffineTransform rotation = CGAffineTransformMakeRotation(M_PI_2);
+    cardView.transform = rotation;
+    [nextCardView addSubview:cardView];
 }
 
 - (void)updateUI {
     [super updateUI];
+
+    [[self.cardView1 subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [[self.cardView2 subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [[self.cardView3 subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    self.descriptionLabel.text = @"";
     
     if (self.game.lastFlipWasMatchCheck) {
-        
+        self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
+        if (self.game.lastFlipWasMatch) {
+            self.descriptionLabel.text = [NSString stringWithFormat:@"Matched for %d points!", self.game.lastFlipScore];
+        } else {
+            self.descriptionLabel.text = [NSString stringWithFormat:@"Not a match! Lose %d points!", -1 * self.game.lastFlipScore];
+        }
+
+        NSMutableArray *matchedCards = [NSMutableArray arrayWithArray:self.game.lastCardsChecked];
+        [matchedCards addObject:self.game.lastFlipCard];
+        for (int i = 0; i < 3; i++) {
+            SetCard *card = (SetCard *)matchedCards[i];
+            UIView *nextCardView;
+            if (i == 0) {
+                nextCardView = self.cardView1;
+            } else if (i == 1) {
+                nextCardView = self.cardView2;
+            } else {
+                nextCardView = self.cardView3;
+            }
+            SetCardView *cardView = [[SetCardView alloc] initWithFrame:CGRectMake(nextCardView.bounds.origin.x, nextCardView.bounds.origin.y, nextCardView.bounds.size.height, nextCardView.bounds.size.width)];
+            [self miniView:cardView fromCard:card inSuperview:nextCardView];
+        }
     } else if (self.game.lastFlipCard) {
         if ([self.game.lastFlipCard isKindOfClass:[SetCard class]]) {
-            SetCard *card = (SetCard *)self.game.lastFlipCard;
-            SetCardView *cardView = [[SetCardView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.bounds.size.width / 2, self.descriptionView.bounds.size.height / 2)];
-            cardView.number = card.number;
-            cardView.shape = card.shape;
-            cardView.color = card.color;
-            cardView.shading = card.shading;
-            cardView.selected = NO;
-            cardView.drawBorder = NO;
-            [self.descriptionView addSubview:cardView];
+            UIView *nextCardView;
+            int selectedCards = 0;
+            for (int i = 0; i < [self.game numberOfCardsInPlay]; i++) {
+                SetCard *card = (SetCard *)[self.game cardAtIndex:i];
+                if (card.isFaceUp) {
+                    selectedCards++;
+                    if (selectedCards == 1) {
+                        nextCardView = self.cardView1;
+                    } else if (selectedCards == 2) {
+                        nextCardView = self.cardView2;
+                    } else {
+                        nextCardView = self.cardView3;
+                    }
+                    SetCardView *cardView = [[SetCardView alloc] initWithFrame:CGRectMake(nextCardView.bounds.origin.x, nextCardView.bounds.origin.y, nextCardView.bounds.size.height, nextCardView.bounds.size.width)];
+                    [self miniView:cardView fromCard:card inSuperview:nextCardView];
+                }
+            }
         }
     }
 }

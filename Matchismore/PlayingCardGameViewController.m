@@ -51,6 +51,10 @@
     return 1;
 }
 
+- (BOOL)flipDownOnMismatch {
+    return NO;
+}
+
 - (NSAttributedString *)displayStringForCard:(Card *)card {
     return [[NSAttributedString alloc] initWithString:card.contents];
 }

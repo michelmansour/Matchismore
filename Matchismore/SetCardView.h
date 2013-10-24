@@ -16,6 +16,5 @@
 @property (strong, nonatomic) NSString *shading;
 
 @property (nonatomic, getter = isSelected) BOOL selected;
-@property (nonatomic) BOOL drawBorder;
 
 @end

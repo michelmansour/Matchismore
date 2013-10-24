@@ -84,9 +84,6 @@
     [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height / 2.0 + self.shapeHeight / 2.0) controlPoint1:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 + 15, self.height / 2.0 + self.shapeHeight / 2.0 - 5) controlPoint2:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 + 10, self.height / 2.0 + self.shapeHeight / 2.0 - 5)];
     [squiggle addQuadCurveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 + 5, self.height / 2.0 - self.shapeHeight / 2.0 + 15) controlPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 - 10, self.height / 2.0 + self.shapeHeight / 2.0)];
     [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height / 2.0 - self.shapeHeight / 2.0) controlPoint1:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 - 15, self.height / 2.0 - self.shapeHeight / 2.0 + 5) controlPoint2:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 - 10, self.height / 2.0 - self.shapeHeight / 2.0 + 5)];
-//    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0, self.height / 2.0 + self.shapeHeight / 2.0) controlPoint1:CGPointMake(self.width * widthFactor + 50, self.height / 2.0) controlPoint2:CGPointMake(self.width * widthFactor + self.shapeWidth / 2.0 - 30, self.height / 2.0)];
-//    [squiggle addLineToPoint:CGPointMake(self.width * widthFactor, self.height / 2.0 + self.shapeHeight / 2.0)];
-//    [squiggle addCurveToPoint:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0, self.height / 2.0 - self.shapeWidth / 2.0) controlPoint1:CGPointMake(self.width * widthFactor - self.shapeWidth / 2.0 - 30, self.height / 2.0) controlPoint2:CGPointMake(self.width * widthFactor + 30, self.height / 2.0)];
     [squiggle closePath];
 }
 
@@ -155,25 +152,18 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    if (self.drawBorder) {
-        UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+    UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                                            cornerRadius:12.0];
-        [roundedRect addClip];
-        if (self.selected) {
-            [[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0] setFill];
-        } else {
-            [[UIColor whiteColor] setFill];
-        }
-        UIRectFill(self.bounds);
-
-        [[UIColor colorWithWhite:0.8 alpha:1.0] setStroke];
-        [roundedRect stroke];
+    [roundedRect addClip];
+    if (self.selected) {
+        [[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0] setFill];
     } else {
-        UIBezierPath *rect = [UIBezierPath bezierPathWithRect:self.bounds];
-        [rect addClip];
         [[UIColor whiteColor] setFill];
-        UIRectFill(self.bounds);
     }
+    UIRectFill(self.bounds);
+    
+    [[UIColor colorWithWhite:0.8 alpha:1.0] setStroke];
+    [roundedRect stroke];
     
     [self drawShapes];
 }

@@ -22,7 +22,7 @@
 
 - (CardMatchingGame *)game {
     if (!_game) {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self deckStartSize] usingDeck:[self deckToPlayWith] withMatchSetSize:self.matchSetSize withFlipCost:self.flipCost withMatchBonus:4 withMismatchPenalty:2];
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self deckStartSize] usingDeck:[self deckToPlayWith] withMatchSetSize:self.matchSetSize withFlipCost:self.flipCost withMatchBonus:4 withMismatchPenalty:2 flipDownOnMismatch:self.flipDownOnMismatch];
     }
     return _game;
 }

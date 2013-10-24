@@ -16,6 +16,7 @@
 @property (strong, nonatomic, readonly) CardMatchingGame *game;
 @property (nonatomic, readonly) NSUInteger matchSetSize;
 @property (nonatomic, readonly) NSUInteger flipCost;
+@property (nonatomic, readonly) BOOL flipDownOnMismatch;
 @property (nonatomic, readonly) BOOL removeUnplayableCards;
 
 - (NSString *)gameName; // abstract

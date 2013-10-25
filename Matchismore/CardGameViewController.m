@@ -111,7 +111,7 @@
 
 - (void)setupGame { /* abstract */ }
 
-- (IBAction)dealNewGame {
+- (void)dealNewGame {
     self.game = nil;
     self.gameResult = nil;
     [self.cardCollectionView reloadData];

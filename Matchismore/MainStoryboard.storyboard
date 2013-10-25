@@ -121,7 +121,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="dealNewGame" destination="06F-SM-KIy" eventType="touchUpInside" id="PxQ-mm-A1x"/>
+                                    <action selector="promptNewGame:" destination="06F-SM-KIy" eventType="touchUpInside" id="Sdp-sg-5nt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -183,7 +183,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="dealNewGame" destination="hXi-BE-BKN" eventType="touchUpInside" id="LKT-8D-lee"/>
+                                    <action selector="promptNewGame:" destination="hXi-BE-BKN" eventType="touchUpInside" id="NEF-kR-vZH"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUe-Id-Yoq">

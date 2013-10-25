@@ -176,4 +176,8 @@
     [self requestMoreCards:SET_MORE_CARDS];
 }
 
+- (IBAction)promptNewGame:(UIButton *)sender {
+    [self dealNewGame];
+}
+
 @end

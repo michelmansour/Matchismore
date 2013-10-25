@@ -28,5 +28,6 @@
 - (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate; // abstract
 - (void)requestMoreCards:(NSUInteger)count;
 - (void)updateUI;
+- (void)dealNewGame;
 
 @end

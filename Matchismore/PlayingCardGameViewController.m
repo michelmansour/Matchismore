@@ -11,7 +11,7 @@
 #import "PlayingCardDeck.h"
 #import "PlayingCardCollectionViewCell.h"
 
-@interface PlayingCardGameViewController ()
+@interface PlayingCardGameViewController () <UIAlertViewDelegate>
 @property (nonatomic) NSUInteger deckStartSize;
 @property (weak, nonatomic) IBOutlet UITextView *descText;
 @end
@@ -24,9 +24,28 @@
     return @"Match";
 }
 
-- (void)setupGame {
-    // nothing yet...
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSUInteger numCards = [[alertView textFieldAtIndex:0].text integerValue];
+        if (numCards && numCards <= [[self deckToPlayWith] size]) {
+            self.deckStartSize = numCards;
+        } else {
+            self.deckStartSize = DEFAULT_NUM_CARDS_IN_PLAY;
+        }
+        [self dealNewGame];
+    }
 }
+
+- (IBAction)promptNewGame:(UIButton *)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New Game" message:@"Start a new game with how many cards?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Deal", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert textFieldAtIndex:0].text = @"22";
+    [alert show];
+}
+
+
+- (void)setupGame {
+    }
 
 - (BOOL)removeUnplayableCards {
     return NO;

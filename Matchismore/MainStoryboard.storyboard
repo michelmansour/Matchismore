@@ -296,13 +296,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mas-ag-3ra">
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.50226247000000002" blue="0.0052738524999999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="doS-OA-hqT">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="By Date">
+                                <state key="normal" title="Date">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -315,7 +316,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2H-tY-Qqk">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="By Score">
+                                <state key="normal" title="Score">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -328,7 +329,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bUd-ni-ZiQ">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="By Duration">
+                                <state key="normal" title="Duration">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -344,14 +345,14 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="doS-OA-hqT" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="1fx-s4-aun"/>
                             <constraint firstAttribute="bottom" secondItem="bUd-ni-ZiQ" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="1jk-xX-rDN"/>
-                            <constraint firstItem="mas-ag-3ra" firstAttribute="bottom" secondItem="CsY-DF-Nhe" secondAttribute="bottom" type="default" id="8ch-YX-Fjx"/>
-                            <constraint firstItem="mas-ag-3ra" firstAttribute="trailing" secondItem="CsY-DF-Nhe" secondAttribute="trailing" type="default" id="D3v-mZ-92z"/>
-                            <constraint firstItem="l2H-tY-Qqk" firstAttribute="leading" secondItem="doS-OA-hqT" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="P9h-kZ-iay"/>
+                            <constraint firstAttribute="bottom" secondItem="l2H-tY-Qqk" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="3kE-Et-iat"/>
+                            <constraint firstItem="doS-OA-hqT" firstAttribute="top" secondItem="mas-ag-3ra" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Cug-ko-0Ec"/>
+                            <constraint firstItem="bUd-ni-ZiQ" firstAttribute="centerX" secondItem="mas-ag-3ra" secondAttribute="centerX" type="default" id="HMN-yf-3Mc"/>
+                            <constraint firstAttribute="trailing" secondItem="l2H-tY-Qqk" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="OsX-mI-Pfb"/>
                             <constraint firstItem="mas-ag-3ra" firstAttribute="top" secondItem="CsY-DF-Nhe" secondAttribute="top" type="default" id="bMB-mN-JrQ"/>
                             <constraint firstItem="mas-ag-3ra" firstAttribute="leading" secondItem="CsY-DF-Nhe" secondAttribute="leading" type="default" id="eXf-YV-dq1"/>
-                            <constraint firstItem="doS-OA-hqT" firstAttribute="leading" secondItem="CsY-DF-Nhe" secondAttribute="leading" constant="10" id="klY-ai-Lzu"/>
-                            <constraint firstItem="bUd-ni-ZiQ" firstAttribute="leading" secondItem="l2H-tY-Qqk" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="mi1-kE-qaw"/>
-                            <constraint firstAttribute="bottom" secondItem="l2H-tY-Qqk" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="py0-tG-JLf"/>
+                            <constraint firstItem="doS-OA-hqT" firstAttribute="leading" secondItem="CsY-DF-Nhe" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="hKd-fy-7dx"/>
+                            <constraint firstItem="bUd-ni-ZiQ" firstAttribute="centerX" secondItem="CsY-DF-Nhe" secondAttribute="centerX" type="default" id="mY1-DG-cFH"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Scores" image="ScoresTabIcon.png" id="nvi-Db-0Zi"/>

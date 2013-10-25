@@ -19,6 +19,10 @@
     return _cards;
 }
 
+- (NSUInteger)size {
+    return [self.cards count];
+}
+
 - (void)addCard:(Card *)card atTop:(BOOL)atTop {
     if (atTop) {
         [self.cards insertObject:card atIndex:0];

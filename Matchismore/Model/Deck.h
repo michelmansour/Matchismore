@@ -11,6 +11,8 @@
 
 @interface Deck : NSObject
 
+@property (nonatomic, readonly) NSUInteger size;
+
 - (void)addCard:(Card *)card atTop:(BOOL)atTop;
 
 - (Card *)drawRandomCard;
